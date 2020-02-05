@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+
+	"github.com/joho/godotenv"
 )
 
 func cleanExit() {
@@ -18,6 +20,14 @@ func cleanExit() {
 
 func main() {
 	log.Println("Starting microservice...")
+
+	//initial setup
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error getting env, not comming through %v", err)
+	} else {
+		log.Println("Reading env values...")
+	}
 
 	//variables definitions
 	var port string
@@ -44,6 +54,9 @@ func main() {
 		switch dataTypeArg {
 		case "memory":
 			dataType = data.Memory
+			break
+		case "postgres":
+			dataType = data.Postgres
 			break
 		}
 

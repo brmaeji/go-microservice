@@ -15,6 +15,8 @@ const (
 	Undefined = iota
 	//Memory Adapters will store data in memory maps
 	Memory = iota
+	//Postgres will use Postgres DB created with .env variables
+	Postgres = iota
 )
 
 //Adapter defines the methods that the DBAdapter has to have
@@ -29,6 +31,13 @@ func NewAdapter(t AdapterType) (Adapter, error) {
 	switch t {
 	case Memory:
 		a, err := NewMemoryAdapter()
+		if err != nil {
+			return nil, err
+		}
+		return a, nil
+		break
+	case Postgres:
+		a, err := NewPostgresAdapter()
 		if err != nil {
 			return nil, err
 		}
