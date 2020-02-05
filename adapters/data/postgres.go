@@ -55,7 +55,7 @@ func (pa *PostgresAdapter) Increase(bm *models.BandMention) (*models.BandMention
 
 	bm.Mentions = bm.Mentions + 1
 
-	err := pa.DB.Model(models.BandMention{}).UpdateColumn("mentions", bm.Mentions).Error
+	err := pa.DB.Model(models.BandMention{}).Where("name = ?", bm.Name).UpdateColumn("mentions", bm.Mentions).Error
 
 	return bm, err
 }
