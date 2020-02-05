@@ -3,6 +3,12 @@ docker pull dpage/pgadmin4
 
 docker network create --driver bridge postgres-network
 
-docker run --name brmaeji-postgres --network=postgres-network -e "POSTGRES_PASSWORD=brmaeji" -p 5432:5432 -v ~/Code/go/src/microservice/postgres:/var/lib/postgresql/data -d postgres
+docker run --name brmaeji-postgres --network=postgres-network -e "POSTGRES_PASSWORD=brmaeji" -p 5432:5432 -v ~/pgdb:/var/lib/postgresql/data -d postgres
 
 docker run --name teste-pgadmin --network=postgres-network -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=brmaeji@gmail.com" -e "PGADMIN_DEFAULT_PASSWORD=brmaeji" -d dpage/pgadmin4
+
+docker build -t bandmentions-srv .
+
+or if using compose, use:
+
+docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
